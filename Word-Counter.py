@@ -5,7 +5,45 @@ import re
 import glob
 import argparse
 
-def main():
+def Char_Count(filename):
+	#字符数统计
+	charcount = 0
+	try:
+		with open(filename, encoding = 'utf-8') as fi:
+			for x in fi:
+				match = re.findall(r'[\s]+', x)
+				for i in match:
+					x = x.replace(i, '')
+				charcount += len(x)
+		return charcount
+	except IOError:
+		print("Failed to open the file,please check if the path is correct.")
+
+def Word_Count(filename, encoding = 'utf-8'):
+	#单词数统计
+	wordcount = 0
+	try:
+		with open(filename) as fi:
+			for x in fi:
+				match = re.findall(r'[a-zA-Z-\']+',x)
+				wordcount += len(match)
+		return wordcount
+	except IOError:
+		print("Failed to open the file,please check if the path is correct.")
+		
+def Line_Count(filename, encoding = 'utf-8'):
+	#行数统计
+	linecount = 0
+	try:
+		with open(filename) as fi:
+			for x in fi:
+				linecount += 1
+		return linecount
+	except IOError:
+		print("Failed to open the file,please check if the path is correct.")
+		
+if __name__=='__main__':
+	#主函数
 	print('Word-Counter starts working...')
 	print('--------------------------------')
 	parser = argparse.ArgumentParser(description="This is a Word-Counter.")
@@ -22,43 +60,3 @@ def main():
 	if args.line_arg:
 		linecount = Line_Count(args.line_arg)
 		print("Number of lines:%s" % (linecount))
-
-def Char_Count(filename):
-	#字符数统计
-	charcount = 0
-	try:
-		with open(filename) as fi:
-			for x in fi:
-				match = re.findall(r'[\s]+', x)
-				for i in match:
-					x = x.replace(i, '')
-				charcount += len(x)
-		return charcount
-	except IOError:
-		print("Failed to open the file,please check if the path is correct.")
-
-def Word_Count(filename):
-	#单词数统计
-	wordcount = 0
-	try:
-		with open(filename) as fi:
-			for x in fi:
-				match = re.findall(r'[a-zA-Z-\']+',x)
-				wordcount += len(match)
-		return wordcount
-	except IOError:
-		print("Failed to open the file,please check if the path is correct.")
-		
-def Line_Count(filename):
-	#行数统计
-	linecount = 0
-	try:
-		with open(filename) as fi:
-			for x in fi:
-				linecount += 1
-		return linecount
-	except IOError:
-		print("Failed to open the file,please check if the path is correct.")
-		
-if __name__=='__main__':
-	main()
